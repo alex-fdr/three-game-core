@@ -1,5 +1,14 @@
 import { WebGLRenderer } from 'three';
-import type { RendererProps } from './settings';
+
+export type RendererProps = {
+    width: number;
+    height: number;
+    parentId: string;
+    antialias: boolean;
+    alpha: boolean;
+    color: number | string;
+    opacity: number;
+};
 
 export class Renderer extends WebGLRenderer {
     constructor(props: RendererProps) {

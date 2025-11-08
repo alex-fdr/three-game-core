@@ -1,5 +1,19 @@
-import { Object3D, PerspectiveCamera, Scene } from 'three';
-import type { CameraProps } from './settings';
+import { Object3D, PerspectiveCamera, Scene, type Vector3Like } from 'three';
+
+export type CameraProps = {
+    fov: {
+        landscape: number;
+        portrait: number;
+    };
+    near: number;
+    far: number;
+    position: Vector3Like;
+    following?: {
+        enabled: boolean;
+        lerp: number;
+        position: Vector3Like;
+    };
+};
 
 export class Camera extends PerspectiveCamera {
     wrapper: Object3D | null;

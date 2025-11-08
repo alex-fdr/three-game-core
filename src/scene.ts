@@ -6,8 +6,36 @@ import {
     Fog,
     HemisphereLight,
     type Light,
+    type Vector3Like,
 } from 'three';
-import type { LightProps, SceneProps } from './settings';
+
+export type SceneProps = {
+    bg: number | string;
+    fog?: {
+        color: number | string;
+        near: number;
+        far: number;
+    };
+    lights: [];
+};
+
+export type LightProps = {
+    type: 'directional';
+    color: number | string;
+    intensity: number;
+    data: { position: Vector3Like; };
+} | {
+    type: 'hemisphere';
+    skyColor: number | string;
+    groundColor: number | string;
+    intensity: number;
+    data: { position: Vector3Like; };
+} | {
+    type: 'ambient';
+    color: number | string;
+    intensity: number;
+    data: undefined;
+};
 
 export class Scene extends BaseScene {
     lights: Light[] = [];

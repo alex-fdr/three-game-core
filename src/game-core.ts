@@ -1,11 +1,17 @@
 import { Clock } from 'three';
 import { throttleTrailing } from '@alexfdr/three-game-utils';
-import { Camera } from './camera';
+import { Camera, type CameraProps } from './camera';
 import { InputSystem } from './input/input';
-import { Physics } from './physics';
-import { Renderer } from './renderer';
-import { Scene } from './scene';
-import type { GameSettings } from './settings';
+import { Physics, type PhysicsProps } from './physics';
+import { Renderer, type RendererProps } from './renderer';
+import { Scene, type SceneProps } from './scene';
+
+export type GameSettings = {
+    scene: SceneProps;
+    renderer: RendererProps;
+    camera: CameraProps;
+    physics: PhysicsProps;
+};
 
 export type UpdateCallback = (time: number, deltaTime: number) => void;
 
