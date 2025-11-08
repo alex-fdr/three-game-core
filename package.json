@@ -2,12 +2,8 @@
     "name": "@alexfdr/three-game-core",
     "version": "1.0.0",
     "description": "",
+    "main": "./dist/three-game-core.js",
     "types": "./dist/three-game-core.d.ts",
-    "exports": {
-        ".": {
-            "import": "./dist/three-game-core.js"
-        }
-    },
     "scripts": {},
     "keywords": [
         "three"
@@ -16,6 +12,7 @@
     "license": "ISC",
     "type": "module",
     "dependencies": {
+        "@alexfdr/three-game-utils": "^1.0.0",
         "cannon-es": "^0.20.0",
         "three": "^0.181.0"
     },

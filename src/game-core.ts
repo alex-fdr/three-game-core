@@ -1,5 +1,5 @@
 import { Clock } from 'three';
-import { throttleTrailing } from 'three-game-utils';
+import { throttleTrailing } from '@alexfdr/three-game-utils';
 import { Camera } from './camera';
 import { InputSystem } from './input/input';
 import { Physics } from './physics';
