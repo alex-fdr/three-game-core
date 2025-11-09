@@ -14,6 +14,7 @@ export type GameSettings = {
 };
 
 export type UpdateCallback = (time: number, deltaTime: number) => void;
+export type ResizeCallback = (width: number, height: number) => void;
 
 export class GameCore {
     scene!: Scene;
@@ -23,6 +24,7 @@ export class GameCore {
     input!: InputSystem;
     clock = new Clock();
     onUpdateCallbacks: UpdateCallback[] = [];
+    onResizeCallbacks: ResizeCallback[] = [];
 
     init(width = 960, height = 960, gameSettings: GameSettings) {
         const { scene, camera, renderer, physics } = gameSettings;
@@ -48,13 +50,26 @@ export class GameCore {
         this.onUpdateCallbacks.push(callback);
     }
 
+    onResize(callback: ResizeCallback) {
+        this.onResizeCallbacks.push(callback);
+    }
+
     resize(width: number, height: number) {
         this.camera.resize(width, height);
         this.renderer.resize(width, height);
+
+        for (const fn of this.onResizeCallbacks) {
+            fn(width, height);
+        }
     }
 
     update(time: number) {
         this.physics.update(time);
+
+        if (this.renderer.resetStateBeforeUpdate) {
+            this.renderer.resetState();
+        }
+
         this.renderer.render(this.scene, this.camera);
 
         for (const fn of this.onUpdateCallbacks) {
