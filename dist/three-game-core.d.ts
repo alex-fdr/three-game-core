@@ -12,6 +12,7 @@ import { Texture } from 'three';
 import { TextureLoader as TextureLoader_2 } from 'three';
 import { Vector3Like } from 'three';
 import { WebGLRenderer } from 'three';
+import { WebGLRendererParameters } from 'three';
 import { World } from 'cannon-es';
 
 export declare const assets: AssetsSystem;
@@ -60,8 +61,10 @@ declare class GameCore {
     input: InputSystem;
     clock: Clock;
     onUpdateCallbacks: UpdateCallback[];
+    onResizeCallbacks: ResizeCallback[];
     init(width: number | undefined, height: number | undefined, gameSettings: GameSettings): void;
     onUpdate(callback: UpdateCallback): void;
+    onResize(callback: ResizeCallback): void;
     resize(width: number, height: number): void;
     update(time: number): void;
 }
@@ -167,19 +170,21 @@ declare type PhysicsProps = {
 };
 
 declare class Renderer extends WebGLRenderer {
+    resetStateBeforeUpdate: boolean;
     constructor(props: RendererProps);
     resize(width: number, height: number): void;
 }
 
-declare type RendererProps = {
+declare type RendererProps = WebGLRendererParameters & {
     width: number;
     height: number;
     parentId: string;
-    antialias: boolean;
-    alpha: boolean;
-    color: number | string;
-    opacity: number;
+    color?: number | string;
+    opacity?: number;
+    resetStateBeforeUpdate?: boolean;
 };
+
+declare type ResizeCallback = (width: number, height: number) => void;
 
 declare class Scene extends Scene_2 {
     lights: Light[];
