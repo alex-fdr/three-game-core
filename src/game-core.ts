@@ -64,14 +64,6 @@ export class GameCore {
     }
 
     update(time: number) {
-        this.physics.update(time);
-
-        if (this.renderer.resetStateBeforeUpdate) {
-            this.renderer.resetState();
-        }
-
-        this.renderer.render(this.scene, this.camera);
-
         for (const fn of this.onUpdateCallbacks) {
             fn(time, this.clock.getDelta());
         }
