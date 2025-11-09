@@ -170,7 +170,6 @@ declare type PhysicsProps = {
 };
 
 declare class Renderer extends WebGLRenderer {
-    resetStateBeforeUpdate: boolean;
     constructor(props: RendererProps);
     resize(width: number, height: number): void;
 }
@@ -181,7 +180,6 @@ declare type RendererProps = WebGLRendererParameters & {
     parentId: string;
     color?: number | string;
     opacity?: number;
-    resetStateBeforeUpdate?: boolean;
 };
 
 declare type ResizeCallback = (width: number, height: number) => void;
