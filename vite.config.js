@@ -11,7 +11,13 @@ export default defineConfig({
             formats: ['es'],
         },
         rollupOptions: {
-            external: ['three', 'cannon-es']
+            external: [
+                'three', 
+                'cannon-es', 
+                'three/addons/loaders/GLTFLoader',
+                'three/addons/utils/SkeletonUtils',
+
+            ]
         },
         reportCompressedSize: false,
     },

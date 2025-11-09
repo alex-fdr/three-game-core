@@ -1,19 +1,32 @@
 import { AmbientLight } from 'three';
+import { AnimationClip } from 'three';
 import { Clock } from 'three';
 import { DirectionalLight } from 'three';
+import { GLTFLoader } from '../../node_modules/@types/three/examples/jsm/loaders/GLTFLoader';
 import { HemisphereLight } from 'three';
 import { Light } from 'three';
 import { Object3D } from 'three';
 import { PerspectiveCamera } from 'three';
 import { Scene as Scene_2 } from 'three';
+import { Texture } from 'three';
+import { TextureLoader as TextureLoader_2 } from 'three';
 import { Vector3Like } from 'three';
 import { WebGLRenderer } from 'three';
 import { World } from 'cannon-es';
+
+export declare const assets: AssetsSystem;
 
 export declare type AssetsData = {
     models: ModelLoadData[];
     textures: TextureLoadData[];
 };
+
+declare class AssetsSystem {
+    models: ModelLoader;
+    textures: TextureLoader;
+    constructor();
+    load({ models, textures }: AssetsData): Promise<void>;
+}
 
 declare class Camera extends PerspectiveCamera {
     wrapper: Object3D | null;
@@ -128,6 +141,18 @@ declare type ModelLoadData = {
     file: string;
 };
 
+declare class ModelLoader {
+    baseUrl: string;
+    storage: Record<string, StorageItem>;
+    loader: GLTFLoader;
+    constructor(baseUrl: string);
+    loadAll(queue?: ModelLoadData[]): Promise<PromiseSettledResult<unknown>[]>;
+    load({ key, file }: ModelLoadData): Promise<unknown>;
+    get(key: string, name?: string): Object3D | never;
+    getAnimation(key: string, index?: number): AnimationClip;
+    getAnimations(key: string, commonNamePart?: string): AnimationClip[];
+}
+
 declare class Physics {
     timeStep: number;
     lastCallTime: number;
@@ -175,9 +200,31 @@ declare type SceneProps = {
     lights: [];
 };
 
+declare type StorageItem = {
+    model: Object3D;
+    animations: AnimationClip[];
+};
+
 declare type TextureLoadData = {
     key: string;
     file: string;
+};
+
+declare class TextureLoader {
+    baseUrl: string;
+    storage: Record<string, Texture>;
+    loader: TextureLoader_2;
+    constructor(baseUrl: string);
+    loadAll(queue?: TextureLoadData[]): Promise<PromiseSettledResult<unknown>[]>;
+    load({ key, file }: TextureLoadData): Promise<unknown>;
+    get(key: string, props?: Partial<TextureProps>): Texture;
+}
+
+declare type TextureProps = {
+    clone: boolean;
+    flipY: boolean;
+    repeatX: number;
+    repeatY: number;
 };
 
 declare type UpdateCallback = (time: number, deltaTime: number) => void;

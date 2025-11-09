@@ -1,4 +1,4 @@
-import { TextureLoader as BaseTextureLoader, RepeatWrapping, Texture } from 'three';
+import { TextureLoader as BaseTextureLoader, RepeatWrapping, type Texture } from 'three';
 
 export type TextureLoadData = {
     key: string;
