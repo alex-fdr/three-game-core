@@ -1,18 +1,22 @@
-import { WebGLRenderer } from 'three';
+import { WebGLRenderer, type WebGLRendererParameters } from 'three';
 
-export type RendererProps = {
+export type RendererProps = WebGLRendererParameters & {
     width: number;
     height: number;
     parentId: string;
-    antialias: boolean;
-    alpha: boolean;
-    color: number | string;
-    opacity: number;
+    color?: number | string;
+    opacity?: number;
 };
 
 export class Renderer extends WebGLRenderer {
     constructor(props: RendererProps) {
-        const { width, height, color, opacity, parentId } = props;
+        const {
+            width,
+            height,
+            parentId,
+            color = '#333333',
+            opacity = 1,
+        } = props;
         super(props);
 
         this.setSize(width, height);
