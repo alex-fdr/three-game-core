@@ -1,6 +1,6 @@
 {
     "name": "@alexfdr/three-game-core",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "",
     "main": "./dist/three-game-core.js",
     "types": "./dist/three-game-core.d.ts",
