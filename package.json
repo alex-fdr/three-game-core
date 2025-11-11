@@ -1,11 +1,12 @@
 {
     "name": "@alexfdr/three-game-core",
-    "version": "1.0.9",
+    "version": "1.0.11",
     "description": "",
     "main": "./dist/three-game-core.js",
     "types": "./dist/three-game-core.d.ts",
     "scripts": {
-        "build": "vite build"
+        "build": "vite build",
+        "prepublishOnly": "npm run build"
     },
     "keywords": [
         "three",

@@ -6,9 +6,12 @@ export type RendererProps = WebGLRendererParameters & {
     parentId: string;
     color?: number | string;
     opacity?: number;
+    needResetState?: boolean;
 };
 
 export class Renderer extends WebGLRenderer {
+    needResetState: boolean;
+
     constructor(props: RendererProps) {
         const {
             width,
@@ -16,8 +19,12 @@ export class Renderer extends WebGLRenderer {
             parentId,
             color = '#333333',
             opacity = 1,
+            needResetState = false,
         } = props;
+
         super(props);
+
+        this.needResetState = needResetState;
 
         this.setSize(width, height);
         this.setClearColor(color, opacity);

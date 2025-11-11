@@ -63,7 +63,17 @@ export class GameCore {
         }
     }
 
+    render() {
+        if (this.renderer.needResetState) {
+            this.renderer.resetState();
+        }
+
+        this.renderer.render(this.scene, this.camera);
+    }
+
     update(time: number) {
+        this.physics.update(time);
+
         for (const fn of this.onUpdateCallbacks) {
             fn(time, this.clock.getDelta());
         }
