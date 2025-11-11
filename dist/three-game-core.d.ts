@@ -66,6 +66,7 @@ declare class GameCore {
     onUpdate(callback: UpdateCallback): void;
     onResize(callback: ResizeCallback): void;
     resize(width: number, height: number): void;
+    render(): void;
     update(time: number): void;
 }
 
@@ -170,6 +171,7 @@ declare type PhysicsProps = {
 };
 
 declare class Renderer extends WebGLRenderer {
+    needResetState: boolean;
     constructor(props: RendererProps);
     resize(width: number, height: number): void;
 }
@@ -180,6 +182,7 @@ declare type RendererProps = WebGLRendererParameters & {
     parentId: string;
     color?: number | string;
     opacity?: number;
+    needResetState?: boolean;
 };
 
 declare type ResizeCallback = (width: number, height: number) => void;

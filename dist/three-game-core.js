@@ -1,35 +1,35 @@
-var u = Object.defineProperty;
-var p = (l, e, t) => e in l ? u(l, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : l[e] = t;
-var i = (l, e, t) => p(l, typeof e != "symbol" ? e + "" : e, t);
-import { PerspectiveCamera as m, Object3D as f, WebGLRenderer as w, Scene as g, Color as b, Fog as v, AmbientLight as c, HemisphereLight as E, DirectionalLight as S, Clock as y, TextureLoader as k, RepeatWrapping as d } from "three";
-import { World as C, NaiveBroadphase as T } from "cannon-es";
-import { GLTFLoader as L } from "three/addons/loaders/GLTFLoader";
-import * as x from "three/addons/utils/SkeletonUtils";
-function z(l, e) {
-  let t, o;
-  return (...s) => {
-    o ? (clearTimeout(t), t = setTimeout(
+var p = Object.defineProperty;
+var m = (l, e, t) => e in l ? p(l, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : l[e] = t;
+var i = (l, e, t) => m(l, typeof e != "symbol" ? e + "" : e, t);
+import { PerspectiveCamera as f, Object3D as w, WebGLRenderer as g, Scene as b, Color as v, Fog as S, AmbientLight as d, HemisphereLight as E, DirectionalLight as y, Clock as k, TextureLoader as C, RepeatWrapping as u } from "three";
+import { World as T, NaiveBroadphase as L } from "cannon-es";
+import { GLTFLoader as x } from "three/addons/loaders/GLTFLoader";
+import * as z from "three/addons/utils/SkeletonUtils";
+function R(l, e) {
+  let t, s;
+  return (...o) => {
+    s ? (clearTimeout(t), t = setTimeout(
       () => {
-        Date.now() - o >= e && (l(...s), o = Date.now());
+        Date.now() - s >= e && (l(...o), s = Date.now());
       },
-      e - (Date.now() - o)
-    )) : (l(...s), o = Date.now());
+      e - (Date.now() - s)
+    )) : (l(...o), s = Date.now());
   };
 }
-class D extends m {
-  constructor(t, o) {
-    const { fov: s, near: n, far: a, position: r, following: h } = t;
-    super(s.portrait, 1, n, a);
+class D extends f {
+  constructor(t, s) {
+    const { fov: o, near: n, far: r, position: a, following: h } = t;
+    super(o.portrait, 1, n, r);
     i(this, "wrapper");
-    this.position.copy(r), this.userData.fov = s, this.wrapper = null, h && this.addWrapper(o, h);
+    this.position.copy(a), this.userData.fov = o, this.wrapper = null, h && this.addWrapper(s, h);
   }
-  addWrapper(t, o) {
-    const { x: s = 0, y: n = 0, z: a = 0 } = o.position;
-    this.wrapper = new f(), this.wrapper.position.set(s, n, a), this.wrapper.add(this), t.add(this.wrapper), this.lookAt(s, n, a);
+  addWrapper(t, s) {
+    const { x: o = 0, y: n = 0, z: r = 0 } = s.position;
+    this.wrapper = new w(), this.wrapper.position.set(o, n, r), this.wrapper.add(this), t.add(this.wrapper), this.lookAt(o, n, r);
   }
-  resize(t, o) {
-    const { fov: s } = this.userData;
-    this.aspect = t / o, this.fov = this.aspect > 1 ? s.landscape : s.portrait, this.updateProjectionMatrix();
+  resize(t, s) {
+    const { fov: o } = this.userData;
+    this.aspect = t / s, this.fov = this.aspect > 1 ? o.landscape : o.portrait, this.updateProjectionMatrix();
   }
 }
 class U {
@@ -43,25 +43,25 @@ class U {
     this.domElement = e;
   }
   init() {
-    const t = "ontouchstart" in document.documentElement || (navigator == null ? void 0 : navigator.maxTouchPoints) >= 1, [o, s, n] = t ? this.touchEvents : this.mouseEvents;
-    this.domElement.addEventListener(o, (a) => {
-      var r;
+    const t = "ontouchstart" in document.documentElement || (navigator == null ? void 0 : navigator.maxTouchPoints) >= 1, [s, o, n] = t ? this.touchEvents : this.mouseEvents;
+    this.domElement.addEventListener(s, (r) => {
+      var a;
       if (!(!this.enabled || !this.handler)) {
-        a instanceof TouchEvent && ((r = a == null ? void 0 : a.touches) == null ? void 0 : r.length) > 1 && a.preventDefault(), this.handler.down(this.getEvent(a));
+        r instanceof TouchEvent && ((a = r == null ? void 0 : r.touches) == null ? void 0 : a.length) > 1 && r.preventDefault(), this.handler.down(this.getEvent(r));
         for (const h of this.callbacks.down)
           h(this.handler.status);
       }
-    }), this.domElement.addEventListener(s, (a) => {
-      if (this.handler && this.handler.pressed) {
-        this.handler.move(this.getEvent(a));
-        for (const r of this.callbacks.move)
-          r(this.handler.status);
+    }), this.domElement.addEventListener(o, (r) => {
+      if (!(!this.enabled || !this.handler) && this.handler.pressed) {
+        this.handler.move(this.getEvent(r));
+        for (const a of this.callbacks.move)
+          a(this.handler.status);
       }
-    }), this.domElement.addEventListener(n, (a) => {
-      if (this.handler) {
-        this.handler.up(this.getEvent(a));
-        for (const r of this.callbacks.up)
-          r(this.handler.status);
+    }), this.domElement.addEventListener(n, (r) => {
+      if (!(!this.enabled || !this.handler)) {
+        this.handler.up(this.getEvent(r));
+        for (const a of this.callbacks.up)
+          a(this.handler.status);
       }
     });
   }
@@ -88,7 +88,7 @@ class A {
     i(this, "maxSubSteps");
     i(this, "world");
     const { gravity: t } = e;
-    this.timeStep = 1 / 60, this.lastCallTime = 0, this.maxSubSteps = 3, this.world = new C(), this.world.broadphase = new T(), this.world.gravity.set(t.x, t.y, t.z);
+    this.timeStep = 1 / 60, this.lastCallTime = 0, this.maxSubSteps = 3, this.world = new T(), this.world.broadphase = new L(), this.world.gravity.set(t.x, t.y, t.z);
   }
   update(e) {
     if (!this.lastCallTime) {
@@ -99,71 +99,74 @@ class A {
     this.world.step(this.timeStep, t, this.maxSubSteps), this.lastCallTime = e;
   }
 }
-class P extends w {
-  constructor(e) {
+class P extends g {
+  constructor(t) {
     const {
-      width: t,
+      width: s,
       height: o,
-      parentId: s,
-      color: n = "#333333",
-      opacity: a = 1
-    } = e;
-    super(e), this.setSize(t, o), this.setClearColor(n, a);
-    const r = document.getElementById(s);
-    r == null || r.append(this.domElement);
+      parentId: n,
+      color: r = "#333333",
+      opacity: a = 1,
+      needResetState: h = !1
+    } = t;
+    super(t);
+    i(this, "needResetState");
+    this.needResetState = h, this.setSize(s, o), this.setClearColor(r, a);
+    const c = document.getElementById(n);
+    c == null || c.append(this.domElement);
   }
-  resize(e, t) {
-    this.setSize(e, t);
+  resize(t, s) {
+    this.setSize(t, s);
   }
 }
-class R extends g {
+class B extends b {
   constructor(t) {
     super();
     i(this, "lights", []);
-    const { bg: o, fog: s, lights: n } = t;
-    this.name = "root", o && this.addBackground(o), n && this.addLights(n), s && this.addFog(s);
+    const { bg: s, fog: o, lights: n } = t;
+    this.name = "root", s && this.addBackground(s), n && this.addLights(n), o && this.addFog(o);
   }
   addBackground(t) {
-    this.background = new b(t);
+    this.background = new v(t);
   }
   addFog(t) {
-    const { color: o = "#ffffff", near: s = 1, far: n = 100 } = t;
-    this.fog = new v(o, s, n);
+    const { color: s = "#ffffff", near: o = 1, far: n = 100 } = t;
+    this.fog = new S(s, o, n);
   }
   addLights(t = []) {
-    for (const o of t) {
-      const { data: s } = o, n = this.createLightInstance(o);
-      s != null && s.position && n.position.copy(s.position), this.add(n), this.lights.push(n);
+    for (const s of t) {
+      const { data: o } = s, n = this.createLightInstance(s);
+      o != null && o.position && n.position.copy(o.position), this.add(n), this.lights.push(n);
     }
   }
   createLightInstance(t) {
     switch (t.type) {
       case "directional":
-        return new S(t.color, t.intensity);
+        return new y(t.color, t.intensity);
       case "hemisphere":
         return new E(t.skyColor, t.groundColor, t.intensity);
       case "ambient":
-        return new c(t.color, t.intensity);
+        return new d(t.color, t.intensity);
       default:
-        return new c("#ff0000", 1);
+        return new d("#ff0000", 1);
     }
   }
 }
-class B {
+class W {
   constructor() {
     i(this, "scene");
     i(this, "camera");
     i(this, "renderer");
     i(this, "physics");
     i(this, "input");
-    i(this, "clock", new y());
+    i(this, "clock", new k());
     i(this, "onUpdateCallbacks", []);
     i(this, "onResizeCallbacks", []);
   }
-  init(e = 960, t = 960, o) {
-    const { scene: s, camera: n, renderer: a, physics: r } = o;
-    this.scene = new R(s), this.camera = new D(n, this.scene), this.renderer = new P({ ...a, width: e, height: t }), this.physics = new A(r), this.input = new U(this.renderer.domElement), this.renderer.setAnimationLoop(this.update.bind(this)), this.resize(e, t), this.input.init();
-    const h = z(() => {
+  init(e = 960, t = 960, s) {
+    const { scene: o, camera: n, renderer: r, physics: a } = s;
+    this.scene = new B(o), this.camera = new D(n, this.scene), this.renderer = new P({ ...r, width: e, height: t }), this.physics = new A(a), this.input = new U(this.renderer.domElement), this.renderer.setAnimationLoop(this.update.bind(this)), this.resize(e, t), this.input.init();
+    const h = R(() => {
       this.resize(window.innerWidth, window.innerHeight);
     }, 1e3);
     window.addEventListener("resize", h);
@@ -176,46 +179,16 @@ class B {
   }
   resize(e, t) {
     this.camera.resize(e, t), this.renderer.resize(e, t);
-    for (const o of this.onResizeCallbacks)
-      o(e, t);
+    for (const s of this.onResizeCallbacks)
+      s(e, t);
+  }
+  render() {
+    this.renderer.needResetState && this.renderer.resetState(), this.renderer.render(this.scene, this.camera);
   }
   update(e) {
+    this.physics.update(e);
     for (const t of this.onUpdateCallbacks)
       t(e, this.clock.getDelta());
-  }
-}
-class W {
-  constructor(e) {
-    i(this, "baseUrl");
-    i(this, "storage");
-    i(this, "loader");
-    this.baseUrl = e, this.storage = {}, this.loader = new L();
-  }
-  loadAll(e = []) {
-    return Promise.allSettled(e.map(this.load, this));
-  }
-  load({ key: e, file: t }) {
-    return new Promise((o) => {
-      this.loader.load(t, (s) => {
-        o(s), this.storage[e] = {
-          model: s.scene,
-          animations: s.animations
-        };
-      });
-    });
-  }
-  get(e, t) {
-    const { model: o } = this.storage[e], s = t ? o.getObjectByName(t) : o;
-    if (!s)
-      throw new Error(`no mesh named ${e} found`);
-    return o.getObjectByProperty("type", "SkinnedMesh") ? x.clone(s) : s.clone();
-  }
-  getAnimation(e, t = 0) {
-    return this.storage[e].animations[t];
-  }
-  getAnimations(e, t) {
-    const o = this.storage[e].animations;
-    return t ? o.filter((s) => s.name.includes(t)) : o;
   }
 }
 class I {
@@ -223,34 +196,68 @@ class I {
     i(this, "baseUrl");
     i(this, "storage");
     i(this, "loader");
-    this.baseUrl = e, this.storage = {}, this.loader = new k();
+    this.baseUrl = e, this.storage = {}, this.loader = new x();
   }
   loadAll(e = []) {
     return Promise.allSettled(e.map(this.load, this));
   }
   load({ key: e, file: t }) {
-    return new Promise((o) => {
-      this.loader.load(t, (s) => {
-        o(s), this.storage[e] = s;
+    return new Promise((s) => {
+      this.loader.load(t, (o) => {
+        s(o), this.storage[e] = {
+          model: o.scene,
+          animations: o.animations
+        };
+      });
+    });
+  }
+  get(e, t) {
+    const { model: s } = this.storage[e], o = t ? s.getObjectByName(t) : s;
+    if (!o)
+      throw new Error(`no mesh named ${e} found`);
+    return s.getObjectByProperty("type", "SkinnedMesh") ? z.clone(o) : o.clone();
+  }
+  getAnimation(e, t = 0) {
+    return this.storage[e].animations[t];
+  }
+  getAnimations(e, t) {
+    const s = this.storage[e].animations;
+    return t ? s.filter((o) => o.name.includes(t)) : s;
+  }
+}
+class M {
+  constructor(e) {
+    i(this, "baseUrl");
+    i(this, "storage");
+    i(this, "loader");
+    this.baseUrl = e, this.storage = {}, this.loader = new C();
+  }
+  loadAll(e = []) {
+    return Promise.allSettled(e.map(this.load, this));
+  }
+  load({ key: e, file: t }) {
+    return new Promise((s) => {
+      this.loader.load(t, (o) => {
+        s(o), this.storage[e] = o;
       });
     });
   }
   get(e, t = {}) {
     const {
-      clone: o = !1,
-      flipY: s = !1,
+      clone: s = !1,
+      flipY: o = !1,
       repeatX: n = 0,
-      repeatY: a = n
+      repeatY: r = n
     } = t;
-    let r = this.storage[e];
-    return r = o ? r.clone() : r, r.flipY = s, n && (r.repeat.set(n, a), r.wrapS = d, r.wrapT = d), r;
+    let a = this.storage[e];
+    return a = s ? a.clone() : a, a.flipY = o, n && (a.repeat.set(n, r), a.wrapS = u, a.wrapT = u), a;
   }
 }
-class M {
+class j {
   constructor() {
     i(this, "models");
     i(this, "textures");
-    this.models = new W("./src/assets/models/"), this.textures = new I("./src/assets/textures/");
+    this.models = new I("./src/assets/models/"), this.textures = new M("./src/assets/textures/");
   }
   async load({ models: e, textures: t }) {
     await Promise.allSettled([
@@ -259,8 +266,8 @@ class M {
     ]), console.log("MODELS:", this.models.storage), console.log("TEXTURES:", this.textures.storage);
   }
 }
-const G = new M(), Y = new B();
+const Y = new j(), $ = new W();
 export {
-  G as assets,
-  Y as core
+  Y as assets,
+  $ as core
 };
