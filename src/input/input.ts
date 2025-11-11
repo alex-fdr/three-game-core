@@ -43,7 +43,7 @@ export class InputSystem {
         });
 
         this.domElement.addEventListener(move, (e) => {
-            if (!this.handler) {
+            if (!this.enabled || !this.handler) {
                 return;
             }
 
@@ -57,7 +57,7 @@ export class InputSystem {
         });
 
         this.domElement.addEventListener(up, (e) => {
-            if (!this.handler) {
+            if (!this.enabled || !this.handler) {
                 return;
             }
 
