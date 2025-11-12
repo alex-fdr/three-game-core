@@ -1,5 +1,4 @@
 import { Clock } from 'three';
-import { throttleTrailing } from '@alexfdr/three-game-utils';
 import { Camera, type CameraProps } from './camera';
 import { InputSystem } from './input/input';
 import { Physics, type PhysicsProps } from './physics';
@@ -38,12 +37,6 @@ export class GameCore {
         this.renderer.setAnimationLoop(this.update.bind(this));
         this.resize(width, height);
         this.input.init();
-
-        const throttledResizeHandler = throttleTrailing(() => {
-            this.resize(window.innerWidth, window.innerHeight);
-        }, 1000);
-
-        window.addEventListener('resize', throttledResizeHandler);
     }
 
     onUpdate(callback: UpdateCallback) {
