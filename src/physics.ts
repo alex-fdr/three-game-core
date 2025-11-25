@@ -2,7 +2,7 @@ import { NaiveBroadphase, World } from 'cannon-es';
 import type { Vector3Like } from 'three';
 
 export type PhysicsProps = {
-    gravity: Vector3Like;
+    gravity?: Vector3Like;
 };
 
 export class Physics {
@@ -12,7 +12,9 @@ export class Physics {
     world: World;
 
     constructor(config: PhysicsProps) {
-        const { gravity } = config;
+        const { 
+            gravity = { x: 0, y: 0, z: 0 }
+        } = config;
 
         this.timeStep = 1 / 60;
         this.lastCallTime = 0;

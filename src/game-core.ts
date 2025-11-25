@@ -15,28 +15,63 @@ export type GameSettings = {
 export type UpdateCallback = (time: number, deltaTime: number) => void;
 export type ResizeCallback = (width: number, height: number) => void;
 
+export const defaultConfig: GameSettings = {
+    scene: {
+        lights: [
+            {
+                type: 'ambient',
+                color: '#ffffff',
+                intensity: 1
+            }
+        ]
+    },
+    camera: {
+        near: 1,
+        far: 1000,
+        fov: { portrait: 45, landscape: 45 },
+        position: { x: 0, y: 0, z: 5 },
+    },
+    renderer: {
+        width: 1024,
+        height: 1024,
+        color: '#333333',
+        opacity: 1,
+        parentId: '',
+        needResetState: false,
+    },
+    physics: {}
+};
+
 export class GameCore {
     scene!: Scene;
     camera!: Camera;
     renderer!: Renderer;
-    physics!: Physics;
+    physics?: Physics;
     input!: InputSystem;
     clock = new Clock();
     onUpdateCallbacks: UpdateCallback[] = [];
     onResizeCallbacks: ResizeCallback[] = [];
 
-    init(width = 960, height = 960, gameSettings: GameSettings) {
-        const { scene, camera, renderer, physics } = gameSettings;
+    init(width = 1024, height = 1024, gameSettings: Partial<GameSettings> = {}) {
+        const settings = { ...defaultConfig, ...gameSettings };
+        const { scene, camera, renderer, physics } = settings;
 
         this.scene = new Scene(scene);
         this.camera = new Camera(camera, this.scene);
         this.renderer = new Renderer({ ...renderer, width, height });
-        this.physics = new Physics(physics);
         this.input = new InputSystem(this.renderer.domElement);
-
+        
+        if (physics) {
+            this.physics = new Physics(physics);
+        }
+        
         this.renderer.setAnimationLoop(this.update.bind(this));
         this.resize(width, height);
         this.input.init();
+
+        if (!renderer?.needResetState) {
+            this.onUpdate(() => this.render());
+        }
     }
 
     onUpdate(callback: UpdateCallback) {
@@ -65,7 +100,7 @@ export class GameCore {
     }
 
     update(time: number) {
-        this.physics.update(time);
+        this.physics?.update(time);
 
         for (const fn of this.onUpdateCallbacks) {
             fn(time, this.clock.getDelta());

@@ -10,13 +10,13 @@ import {
 } from 'three';
 
 export type SceneProps = {
-    bg: number | string;
+    bg?: number | string;
     fog?: {
         color: number | string;
         near: number;
         far: number;
     };
-    lights: [];
+    lights?: LightProps[];
 };
 
 export type LightProps = {
@@ -29,12 +29,10 @@ export type LightProps = {
     skyColor: number | string;
     groundColor: number | string;
     intensity: number;
-    data: { position: Vector3Like; };
 } | {
     type: 'ambient';
     color: number | string;
     intensity: number;
-    data: undefined;
 };
 
 export class Scene extends BaseScene {
@@ -62,11 +60,10 @@ export class Scene extends BaseScene {
 
     addLights(lightsSettings: LightProps[] = []) {
         for (const props of lightsSettings) {
-            const { data } = props;
             const light = this.createLightInstance(props);
 
-            if (data?.position) {
-                light.position.copy(data.position);
+            if ('data' in props && 'position' in props.data) {
+                light.position.copy(props.data.position);
             }
 
             this.add(light);

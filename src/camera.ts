@@ -8,7 +8,7 @@ export type CameraProps = {
     near: number;
     far: number;
     position: Vector3Like;
-    following?: {
+    wrapper?: {
         enabled: boolean;
         lerp: number;
         position: Vector3Like;
@@ -19,7 +19,7 @@ export class Camera extends PerspectiveCamera {
     wrapper: Object3D | null;
 
     constructor(props: CameraProps, scene: Scene) {
-        const { fov, near, far, position, following } = props;
+        const { fov, near, far, position, wrapper } = props;
 
         super(fov.portrait, 1, near, far);
 
@@ -27,12 +27,12 @@ export class Camera extends PerspectiveCamera {
         this.userData.fov = fov;
         this.wrapper = null;
 
-        if (following) {
-            this.addWrapper(scene, following);
+        if (wrapper) {
+            this.addWrapper(scene, wrapper);
         }
     }
 
-    addWrapper(scene: Scene, props: NonNullable<CameraProps['following']>) {
+    addWrapper(scene: Scene, props: NonNullable<CameraProps['wrapper']>) {
         const { x = 0, y = 0, z = 0 } = props.position;
         this.wrapper = new Object3D();
         this.wrapper.position.set(x, y, z);
