@@ -31,6 +31,6 @@ export class Renderer extends WebGLRenderer {
     }
 
     resize(width: number, height: number) {
-        this.setSize(width, height);
+        this.setSize(width, height, false);
     }
 }
