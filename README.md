@@ -11,12 +11,7 @@ npm install @alexfdr/three-game-core --save
 ```typescript
 import { core, type GameSettings } from '@alexfdr/three-game-core';
 
-const width = 1024;
-const height = 1024;
-const settings: GameSettings = {};
-
-core.init(width, height, settings);
-
+core.init(window.innerWidth, window.innerHeight);
 ```
 
 ## Loading assets
