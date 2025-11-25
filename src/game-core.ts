@@ -4,6 +4,7 @@ import { InputSystem } from './input/input';
 import { Physics, type PhysicsProps } from './physics';
 import { Renderer, type RendererProps } from './renderer';
 import { Scene, type SceneProps } from './scene';
+import { deepMerge } from '@alexfdr/three-game-utils';
 
 export type GameSettings = {
     scene: SceneProps;
@@ -15,7 +16,7 @@ export type GameSettings = {
 export type UpdateCallback = (time: number, deltaTime: number) => void;
 export type ResizeCallback = (width: number, height: number) => void;
 
-export const defaultConfig: GameSettings = {
+export const defaultSettings: GameSettings = {
     scene: {
         lights: [
             {
@@ -53,7 +54,7 @@ export class GameCore {
     onResizeCallbacks: ResizeCallback[] = [];
 
     init(width = 1024, height = 1024, gameSettings: Partial<GameSettings> = {}) {
-        const settings = { ...defaultConfig, ...gameSettings };
+        const settings = deepMerge(defaultSettings, gameSettings);
         const { scene, camera, renderer, physics } = settings;
 
         this.scene = new Scene(scene);
