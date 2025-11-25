@@ -32,7 +32,7 @@ declare class AssetsSystem {
 declare class Camera extends PerspectiveCamera {
     wrapper: Object3D | null;
     constructor(props: CameraProps, scene: Scene_2);
-    addWrapper(scene: Scene_2, props: NonNullable<CameraProps['following']>): void;
+    addWrapper(scene: Scene_2, props: NonNullable<CameraProps['wrapper']>): void;
     resize(width: number, height: number): void;
 }
 
@@ -44,7 +44,7 @@ declare type CameraProps = {
     near: number;
     far: number;
     position: Vector3Like;
-    following?: {
+    wrapper?: {
         enabled: boolean;
         lerp: number;
         position: Vector3Like;
@@ -57,12 +57,12 @@ declare class GameCore {
     scene: Scene;
     camera: Camera;
     renderer: Renderer;
-    physics: Physics;
+    physics?: Physics;
     input: InputSystem;
     clock: Clock;
     onUpdateCallbacks: UpdateCallback[];
     onResizeCallbacks: ResizeCallback[];
-    init(width: number | undefined, height: number | undefined, gameSettings: GameSettings): void;
+    init(width?: number, height?: number, gameSettings?: Partial<GameSettings>): void;
     onUpdate(callback: UpdateCallback): void;
     onResize(callback: ResizeCallback): void;
     resize(width: number, height: number): void;
@@ -130,14 +130,10 @@ declare type LightProps = {
     skyColor: number | string;
     groundColor: number | string;
     intensity: number;
-    data: {
-        position: Vector3Like;
-    };
 } | {
     type: 'ambient';
     color: number | string;
     intensity: number;
-    data: undefined;
 };
 
 declare type ModelLoadData = {
@@ -167,7 +163,7 @@ declare class Physics {
 }
 
 declare type PhysicsProps = {
-    gravity: Vector3Like;
+    gravity?: Vector3Like;
 };
 
 declare class Renderer extends WebGLRenderer {
@@ -180,8 +176,8 @@ declare type RendererProps = WebGLRendererParameters & {
     width: number;
     height: number;
     parentId: string;
-    color?: number | string;
-    opacity?: number;
+    color: number | string;
+    opacity: number;
     needResetState?: boolean;
 };
 
@@ -197,13 +193,13 @@ declare class Scene extends Scene_2 {
 }
 
 declare type SceneProps = {
-    bg: number | string;
+    bg?: number | string;
     fog?: {
         color: number | string;
         near: number;
         far: number;
     };
-    lights: [];
+    lights?: LightProps[];
 };
 
 declare type StorageItem = {
