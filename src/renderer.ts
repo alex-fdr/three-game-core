@@ -19,7 +19,7 @@ export class Renderer extends WebGLRenderer {
 
         this.needResetState = needResetState ?? false;
 
-        this.setSize(width, height);
+        this.setSize(width, height, false);
         this.setClearColor(color, opacity);
 
         if (parentId) {
