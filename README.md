@@ -9,9 +9,26 @@ npm install @alexfdr/three-game-core --save
 
 ## Initialization
 ```typescript
-import { core, type GameSettings } from '@alexfdr/three-game-core';
+import { core } from '@alexfdr/three-game-core';
 
 core.init(window.innerWidth, window.innerHeight);
+```
+It is possible to define some extra settings for a camera, a renderer and a scene, etc.
+```typescript
+import { core, type GameSettings } from '@alexfdr/three-game-core';
+
+const settings: GameSettings = {
+    camera: {
+        near: 1,
+        far: 100,
+        position: { x: 1, y: 2, z: 3 },
+    },
+    renderer: {
+        color: '#ff00ff',
+    },
+};
+
+core.init(window.innerWidth, window.innerHeight, settings);
 ```
 
 ## Loading assets
