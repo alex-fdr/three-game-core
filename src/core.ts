@@ -1,5 +1,5 @@
 import { Clock } from 'three';
-import { deepMerge } from '@alexfdr/three-game-utils';
+import { deepMerge } from './utils';
 import { Camera, type CameraProps } from './camera';
 import { InputSystem } from './input/input';
 import { Physics, type PhysicsProps } from './physics';

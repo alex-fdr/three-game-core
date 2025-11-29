@@ -10,10 +10,19 @@ import { PerspectiveCamera } from 'three';
 import { Scene as Scene_2 } from 'three';
 import { Texture } from 'three';
 import { TextureLoader as TextureLoader_2 } from 'three';
+import { Vector3 } from 'three';
 import { Vector3Like } from 'three';
 import { WebGLRenderer } from 'three';
 import { WebGLRendererParameters } from 'three';
 import { World } from 'cannon-es';
+
+declare type AmbientLightProps = {
+    type: 'ambient';
+    color: number | string;
+    intensity: number;
+};
+
+declare function applyTransform(target: Object3D, props?: TransformProps): void;
 
 export declare const assets: AssetsSystem;
 
@@ -53,6 +62,17 @@ declare type CameraProps = {
 
 export declare const core: GameCore;
 
+declare function deepMerge(target: any, source: any): any;
+
+declare type DirectionalLightProps = {
+    type: 'directional';
+    color: number | string;
+    intensity: number;
+    data: {
+        position: Vector3Like;
+    };
+};
+
 declare class GameCore {
     scene: Scene;
     camera: Camera;
@@ -62,7 +82,7 @@ declare class GameCore {
     clock: Clock;
     onUpdateCallbacks: UpdateCallback[];
     onResizeCallbacks: ResizeCallback[];
-    init(width?: number, height?: number, gameSettings?: Partial<GameSettings>): void;
+    init(width: number, height: number, gameSettings?: Partial<GameSettings>): void;
     onUpdate(callback: UpdateCallback): void;
     onResize(callback: ResizeCallback): void;
     resize(width: number, height: number): void;
@@ -75,6 +95,20 @@ export declare type GameSettings = {
     renderer: RendererProps;
     camera: CameraProps;
     physics: PhysicsProps;
+};
+
+declare function getObjectSize(target: Object3D): Vector3;
+
+declare function getScreenSize(base?: number): {
+    width: number;
+    height: number;
+};
+
+declare type HemisphereLightProps = {
+    type: 'hemisphere';
+    skyColor: number | string;
+    groundColor: number | string;
+    intensity: number;
 };
 
 declare type InputCallback = (data: InputStatus) => void;
@@ -118,23 +152,7 @@ declare class InputSystem {
     onUp(cb: InputCallback): void;
 }
 
-declare type LightProps = {
-    type: 'directional';
-    color: number | string;
-    intensity: number;
-    data: {
-        position: Vector3Like;
-    };
-} | {
-    type: 'hemisphere';
-    skyColor: number | string;
-    groundColor: number | string;
-    intensity: number;
-} | {
-    type: 'ambient';
-    color: number | string;
-    intensity: number;
-};
+declare type LightProps = DirectionalLightProps | HemisphereLightProps | AmbientLightProps;
 
 declare type ModelLoadData = {
     key: string;
@@ -229,6 +247,26 @@ declare type TextureProps = {
     repeatY: number;
 };
 
+declare function throttleTrailing(callback: Function, limit: number): (...args: any[]) => void;
+
+declare interface TransformProps {
+    position?: Partial<Vector3Like>;
+    rotation?: Partial<Vector3Like>;
+    scale?: Partial<Vector3Like>;
+    scaleFactor?: number;
+}
+
 declare type UpdateCallback = (time: number, deltaTime: number) => void;
+
+export declare namespace utils {
+    export {
+        applyTransform,
+        TransformProps,
+        getObjectSize,
+        getScreenSize,
+        throttleTrailing,
+        deepMerge
+    }
+}
 
 export { }
