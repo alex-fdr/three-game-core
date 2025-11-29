@@ -7,9 +7,7 @@
     },
     "files": {
         "ignoreUnknown": false,
-        "includes": [
-            "src/"
-        ]
+        "includes": ["src"]
     },
     "formatter": {
         "enabled": true,
@@ -39,10 +37,7 @@
                     "level": "on",
                     "options": {
                         "identifierOrder": "natural",
-                        "groups": [
-                            "cannon-es",
-                            "three"
-                        ]
+                        "groups": ["cannon-es", "three"]
                     }
                 }
             }

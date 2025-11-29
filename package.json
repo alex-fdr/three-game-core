@@ -2,19 +2,25 @@
     "name": "@alexfdr/three-game-core",
     "version": "1.0.18",
     "description": "",
-    "main": "./dist/three-game-core.js",
-    "types": "./dist/three-game-core.d.ts",
-    "scripts": {
-        "build": "vite build",
-        "prepublishOnly": "npm run build"
-    },
+    "author": "alexfdr",
+    "license": "ISC",
     "keywords": [
         "three",
         "cannon-es"
     ],
-    "author": "",
-    "license": "ISC",
     "type": "module",
+    "files": ["dist"],
+    "main": "./dist/three-game-core.js",
+    "types": "./dist/three-game-core.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/three-game-core.js"
+        }
+    },
+    "scripts": {
+        "build": "vite build",
+        "prepublishOnly": "npm run build"
+    },
     "dependencies": {
         "@alexfdr/three-game-utils": "^1.0.4"
     },
