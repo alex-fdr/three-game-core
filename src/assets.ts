@@ -1,9 +1,9 @@
-import { ModelLoader, type ModelLoadData } from './loaders/model-loader';
-import { TextureLoader, type TextureLoadData } from './loaders/texture-loader';
+import { type ModelLoadData, ModelLoader } from './loaders/model-loader';
+import { type TextureLoadData, TextureLoader } from './loaders/texture-loader';
 
 export type AssetsData = {
-    models: ModelLoadData[],
-    textures: TextureLoadData[],
+    models: ModelLoadData[];
+    textures: TextureLoadData[];
 };
 
 class AssetsSystem {
@@ -16,6 +16,7 @@ class AssetsSystem {
     }
 
     async load({ models, textures }: AssetsData) {
+        // biome-ignore format : keep it this way for more readability
         await Promise.allSettled([
             this.models.loadAll(models),
             this.textures.loadAll(textures),

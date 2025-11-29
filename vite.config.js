@@ -1,6 +1,6 @@
+import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
-import { resolve } from 'path';
 
 export default defineConfig({
     build: {
@@ -12,16 +12,13 @@ export default defineConfig({
         },
         rollupOptions: {
             external: [
-                'three', 
-                'cannon-es', 
+                'three',
+                'cannon-es',
                 'three/addons/loaders/GLTFLoader',
                 'three/addons/utils/SkeletonUtils',
-
-            ]
+            ],
         },
         reportCompressedSize: false,
     },
-    plugins: [
-        dts({ rollupTypes: true })
-    ]
-})
+    plugins: [dts({ rollupTypes: true })],
+});

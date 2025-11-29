@@ -19,21 +19,27 @@ export type SceneProps = {
     lights?: LightProps[];
 };
 
-export type LightProps = {
+type DirectionalLightProps = {
     type: 'directional';
     color: number | string;
     intensity: number;
-    data: { position: Vector3Like; };
-} | {
+    data: { position: Vector3Like };
+};
+
+type HemisphereLightProps = {
     type: 'hemisphere';
     skyColor: number | string;
     groundColor: number | string;
     intensity: number;
-} | {
+};
+
+type AmbientLightProps = {
     type: 'ambient';
     color: number | string;
     intensity: number;
 };
+
+type LightProps = DirectionalLightProps | HemisphereLightProps | AmbientLightProps;
 
 export class Scene extends BaseScene {
     lights: Light[] = [];

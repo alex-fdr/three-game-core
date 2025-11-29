@@ -1,4 +1,4 @@
-import { Object3D, PerspectiveCamera, Scene, type Vector3Like } from 'three';
+import { Object3D, PerspectiveCamera, type Scene, type Vector3Like } from 'three';
 
 export type CameraProps = {
     fov: {

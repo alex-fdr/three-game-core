@@ -12,9 +12,7 @@ export class Physics {
     world: World;
 
     constructor(config: PhysicsProps) {
-        const { 
-            gravity = { x: 0, y: 0, z: 0 }
-        } = config;
+        const { gravity = { x: 0, y: 0, z: 0 } } = config;
 
         this.timeStep = 1 / 60;
         this.lastCallTime = 0;

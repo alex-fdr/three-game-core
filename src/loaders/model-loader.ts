@@ -60,8 +60,9 @@ export class ModelLoader {
 
     getAnimations(key: string, commonNamePart?: string) {
         const list = this.storage[key].animations;
-        return commonNamePart
-            ? list.filter((anim) => anim.name.includes(commonNamePart))
+        // biome-ignore format : keep it as it is
+        return commonNamePart 
+            ? list.filter((anim) => anim.name.includes(commonNamePart)) 
             : list;
     }
 }
