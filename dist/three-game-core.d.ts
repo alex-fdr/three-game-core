@@ -80,11 +80,9 @@ declare class GameCore {
     physics?: Physics;
     input: InputSystem;
     clock: Clock;
-    onUpdateCallbacks: UpdateCallback[];
-    onResizeCallbacks: ResizeCallback[];
+    onUpdate: Signal<[number, number]>;
+    onResize: Signal<[number, number]>;
     init(width: number, height: number, gameSettings?: Partial<GameSettings>): void;
-    onUpdate(callback: UpdateCallback): void;
-    onResize(callback: ResizeCallback): void;
     resize(width: number, height: number): void;
     render(): void;
     update(time: number): void;
@@ -154,6 +152,8 @@ declare class InputSystem {
 
 declare type LightProps = DirectionalLightProps | HemisphereLightProps | AmbientLightProps;
 
+declare type ListenerFunc<T extends any[]> = (...args: T) => void;
+
 declare type ModelLoadData = {
     key: string;
     file: string;
@@ -199,8 +199,6 @@ declare type RendererProps = WebGLRendererParameters & {
     needResetState?: boolean;
 };
 
-declare type ResizeCallback = (width: number, height: number) => void;
-
 declare class Scene extends Scene_2 {
     lights: Light[];
     constructor(props: SceneProps);
@@ -219,6 +217,14 @@ declare type SceneProps = {
     };
     lights?: LightProps[];
 };
+
+declare class Signal<T extends any[]> {
+    listeners: ListenerFunc<T>[];
+    add(listener: ListenerFunc<T>, context?: unknown): void;
+    addOnce(listener: ListenerFunc<T>, context?: unknown): void;
+    remove(): void;
+    dispatch(...data: T): void;
+}
 
 declare type StorageItem = {
     model: Object3D;
@@ -255,8 +261,6 @@ declare interface TransformProps {
     scale?: Partial<Vector3Like>;
     scaleFactor?: number;
 }
-
-declare type UpdateCallback = (time: number, deltaTime: number) => void;
 
 export declare namespace utils {
     export {
