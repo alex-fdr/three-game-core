@@ -1,10 +1,10 @@
 import { Clock } from 'three';
 import { Camera, type CameraProps } from './camera';
-import { InputSystem } from './input/input';
+import { Signal } from './helpers/signal';
+import { InputSystem } from './input';
 import { Physics, type PhysicsProps } from './physics';
 import { Renderer, type RendererProps } from './renderer';
 import { Scene, type SceneProps } from './scene';
-import { Signal } from './helpers/signal';
 import * as utils from './utils';
 
 export type GameSettings = {
@@ -71,7 +71,7 @@ export class GameCore {
         if (!renderer?.needResetState) {
             this.onUpdate.add(this.render, this);
         }
-        
+
         window.addEventListener('resize', () => {
             const { width, height } = utils.getScreenSize();
             this.resize(width, height);

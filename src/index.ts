@@ -1,8 +1,8 @@
 import { GameCore } from './core';
 
-export { assets, type AssetsData } from './assets';
+export { type AssetsData, assets } from './assets';
 export type { GameSettings } from './core';
-export type { InputHandler, InputStatus } from './input/input-handler';
+export type { InputHandler, InputStatus } from './input';
 export * as utils from './utils';
 
 export const core = new GameCore();

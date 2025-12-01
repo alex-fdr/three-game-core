@@ -1,11 +1,21 @@
-import type { InputHandler, InputStatus } from './input-handler';
+export interface InputHandler {
+    down(e: MouseEvent | Touch): void;
+    move(e: MouseEvent | Touch): void;
+    up(e: MouseEvent | Touch): void;
+    pressed?: boolean;
+    status: InputStatus;
+}
 
-type InputCallback = (data: InputStatus) => void;
-type InputHanderCallbacks = {
-    down: InputCallback[],
-    up: InputCallback[],
-    move: InputCallback[],
-};
+export interface InputStatus {
+    currX: number;
+    currY: number;
+    prevX: number;
+    prevY: number;
+    deltaX: number;
+    deltaY: number;
+}
+
+export type InputCallback = (data: InputStatus) => void;
 
 export class InputSystem {
     domElement: HTMLCanvasElement;
@@ -13,7 +23,11 @@ export class InputSystem {
     handler: InputHandler | null = null;
     mouseEvents = ['mousedown', 'mousemove', 'mouseup'] as const;
     touchEvents = ['touchstart', 'touchmove', 'touchend'] as const;
-    callbacks: InputHanderCallbacks = { down: [], move: [], up: [] };
+    callbacks: {
+        down: InputCallback[];
+        up: InputCallback[];
+        move: InputCallback[];
+    } = { down: [], move: [], up: [] };
 
     constructor(domElement: HTMLCanvasElement) {
         this.domElement = domElement;
@@ -43,16 +57,14 @@ export class InputSystem {
         });
 
         this.domElement.addEventListener(move, (e) => {
-            if (!this.enabled || !this.handler) {
+            if (!this.enabled || !this.handler || !this.handler.pressed) {
                 return;
             }
 
-            if (this.handler.pressed) {
-                this.handler.move(this.getEvent(e));
+            this.handler.move(this.getEvent(e));
 
-                for (const cb of this.callbacks.move) {
-                    cb(this.handler.status);
-                }
+            for (const cb of this.callbacks.move) {
+                cb(this.handler.status);
             }
         });
 
