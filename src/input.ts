@@ -1,3 +1,5 @@
+import { Signal } from './helpers/signal';
+
 export interface InputHandler {
     down(e: MouseEvent | Touch): void;
     move(e: MouseEvent | Touch): void;
@@ -15,19 +17,15 @@ export interface InputStatus {
     deltaY: number;
 }
 
-export type InputCallback = (data: InputStatus) => void;
-
 export class InputSystem {
     domElement: HTMLCanvasElement;
     enabled = false;
     handler: InputHandler | null = null;
     mouseEvents = ['mousedown', 'mousemove', 'mouseup'] as const;
     touchEvents = ['touchstart', 'touchmove', 'touchend'] as const;
-    callbacks: {
-        down: InputCallback[];
-        up: InputCallback[];
-        move: InputCallback[];
-    } = { down: [], move: [], up: [] };
+    onDown: Signal<[InputStatus]> = new Signal();
+    onUp: Signal<[InputStatus]> = new Signal();
+    onMove: Signal<[InputStatus]> = new Signal();
 
     constructor(domElement: HTMLCanvasElement) {
         this.domElement = domElement;
@@ -50,10 +48,7 @@ export class InputSystem {
             }
 
             this.handler.down(this.getEvent(e));
-
-            for (const cb of this.callbacks.down) {
-                cb(this.handler.status);
-            }
+            this.onDown.dispatch(this.handler.status);
         });
 
         this.domElement.addEventListener(move, (e) => {
@@ -62,10 +57,7 @@ export class InputSystem {
             }
 
             this.handler.move(this.getEvent(e));
-
-            for (const cb of this.callbacks.move) {
-                cb(this.handler.status);
-            }
+            this.onMove.dispatch(this.handler.status);
         });
 
         this.domElement.addEventListener(up, (e) => {
@@ -74,10 +66,7 @@ export class InputSystem {
             }
 
             this.handler.up(this.getEvent(e));
-
-            for (const cb of this.callbacks.up) {
-                cb(this.handler.status);
-            }
+            this.onUp.dispatch(this.handler.status);
         });
     }
 
@@ -88,17 +77,5 @@ export class InputSystem {
 
     getEvent(e: TouchEvent | MouseEvent): Touch | MouseEvent {
         return e instanceof TouchEvent ? e.changedTouches[0] : e;
-    }
-
-    onDown(cb: InputCallback) {
-        this.callbacks.down.push(cb);
-    }
-
-    onMove(cb: InputCallback) {
-        this.callbacks.move.push(cb);
-    }
-
-    onUp(cb: InputCallback) {
-        this.callbacks.up.push(cb);
     }
 }
