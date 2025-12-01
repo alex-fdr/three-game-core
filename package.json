@@ -1,7 +1,7 @@
 {
     "name": "@alexfdr/three-game-core",
-    "version": "1.0.20",
-    "description": "a three.js template",
+    "version": "1.0.21",
+    "description": "a three.js wrapper",
     "author": "alexfdr",
     "license": "ISC",
     "keywords": [
@@ -9,7 +9,9 @@
         "cannon-es"
     ],
     "type": "module",
-    "files": ["dist"],
+    "files": [
+        "dist"
+    ],
     "main": "./dist/three-game-core.js",
     "types": "./dist/three-game-core.d.ts",
     "exports": "./dist/three-game-core.js",
