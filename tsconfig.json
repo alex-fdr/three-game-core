@@ -22,6 +22,7 @@
         "noFallthroughCasesInSwitch": true,
         "noUncheckedSideEffectImports": true,
         "baseUrl": ".",
+        "rootDir": "src",
         "paths": {
             "three/addons/*": [
                 "node_modules/@types/three/examples/jsm/*"
