@@ -12,11 +12,7 @@
     "files": ["dist"],
     "main": "./dist/three-game-core.js",
     "types": "./dist/three-game-core.d.ts",
-    "exports": {
-        ".": {
-            "import": "./dist/three-game-core.js"
-        }
-    },
+    "exports": "./dist/three-game-core.js",
     "scripts": {
         "build": "vite build",
         "prepublishOnly": "npm run build"
