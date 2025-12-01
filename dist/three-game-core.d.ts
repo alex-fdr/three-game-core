@@ -109,14 +109,6 @@ declare type HemisphereLightProps = {
     intensity: number;
 };
 
-declare type InputCallback = (data: InputStatus) => void;
-
-declare type InputHanderCallbacks = {
-    down: InputCallback[];
-    up: InputCallback[];
-    move: InputCallback[];
-};
-
 export declare interface InputHandler {
     down(e: MouseEvent | Touch): void;
     move(e: MouseEvent | Touch): void;
@@ -140,14 +132,13 @@ declare class InputSystem {
     handler: InputHandler | null;
     mouseEvents: readonly ["mousedown", "mousemove", "mouseup"];
     touchEvents: readonly ["touchstart", "touchmove", "touchend"];
-    callbacks: InputHanderCallbacks;
+    onDown: Signal<[InputStatus]>;
+    onUp: Signal<[InputStatus]>;
+    onMove: Signal<[InputStatus]>;
     constructor(domElement: HTMLCanvasElement);
     init(): void;
     setHandler(handler: InputHandler): void;
     getEvent(e: TouchEvent | MouseEvent): Touch | MouseEvent;
-    onDown(cb: InputCallback): void;
-    onMove(cb: InputCallback): void;
-    onUp(cb: InputCallback): void;
 }
 
 declare type LightProps = DirectionalLightProps | HemisphereLightProps | AmbientLightProps;
