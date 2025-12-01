@@ -48,8 +48,8 @@ export class GameCore {
     physics?: Physics;
     input!: InputSystem;
     clock = new Clock();
-    onUpdate = new Signal<[number, number]>();
-    onResize = new Signal<[number, number]>();
+    onUpdate: Signal<[number, number]> = new Signal();
+    onResize: Signal<[number, number]> = new Signal();
 
     init(width: number, height: number, gameSettings: Partial<GameSettings> = {}) {
         const settings = utils.deepMerge(defaultSettings, gameSettings);
