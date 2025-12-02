@@ -14,13 +14,11 @@ export type ModelLoadData = {
 
 export class ModelLoader {
     public baseUrl: string;
-    public storage: Record<string, StorageItem>;
-    public loader: GLTFLoader;
+    public storage: Record<string, StorageItem> = {};
+    public loader = new GLTFLoader();
 
     constructor(baseUrl: string) {
         this.baseUrl = baseUrl;
-        this.storage = {};
-        this.loader = new GLTFLoader();
     }
 
     loadAll(queue: ModelLoadData[] = []) {

@@ -14,13 +14,11 @@ type TextureProps = {
 
 export class TextureLoader {
     baseUrl: string;
-    storage: Record<string, Texture>;
-    loader: BaseTextureLoader;
+    storage: Record<string, Texture> = {};
+    loader = new BaseTextureLoader();
 
     constructor(baseUrl: string) {
         this.baseUrl = baseUrl;
-        this.storage = {};
-        this.loader = new BaseTextureLoader();
     }
 
     loadAll(queue: TextureLoadData[] = []) {
