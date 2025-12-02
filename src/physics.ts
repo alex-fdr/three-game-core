@@ -6,17 +6,13 @@ export type PhysicsProps = {
 };
 
 export class Physics {
-    timeStep: number;
-    lastCallTime: number;
-    maxSubSteps: number;
+    timeStep = 1 / 60;
+    lastCallTime = 0;
+    maxSubSteps = 3;
     world: World;
 
     constructor(config: PhysicsProps) {
         const { gravity = { x: 0, y: 0, z: 0 } } = config;
-
-        this.timeStep = 1 / 60;
-        this.lastCallTime = 0;
-        this.maxSubSteps = 3;
 
         this.world = new World();
         this.world.broadphase = new NaiveBroadphase();

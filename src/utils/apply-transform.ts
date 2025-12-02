@@ -1,13 +1,13 @@
-import type { Vector3Like, Object3D } from 'three';
+import type { Object3D, Vector3Like } from 'three';
 
 export interface TransformProps {
-    position?: Partial<Vector3Like>,
-    rotation?: Partial<Vector3Like>,
-    scale?: Partial<Vector3Like>,
+    position?: Partial<Vector3Like>;
+    rotation?: Partial<Vector3Like>;
+    scale?: Partial<Vector3Like>;
     scaleFactor?: number;
 }
 
-export function applyTransform(target: Object3D, props: TransformProps = {}) {
+export function applyTransform(target: Object3D, props: TransformProps = {}): void {
     const { position, rotation, scale, scaleFactor } = props;
 
     if (position) {

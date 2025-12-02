@@ -15,7 +15,7 @@ class AssetsSystem {
         this.textures = new TextureLoader('./src/assets/textures/');
     }
 
-    async load({ models, textures }: AssetsData) {
+    async load({ models, textures }: AssetsData): Promise<void> {
         // biome-ignore format : keep it this way for more readability
         await Promise.allSettled([
             this.models.loadAll(models),

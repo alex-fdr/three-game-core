@@ -55,16 +55,16 @@ export class Scene extends BaseScene {
         if (fog) this.addFog(fog);
     }
 
-    addBackground(color: number | string) {
+    addBackground(color: number | string): void {
         this.background = new Color(color);
     }
 
-    addFog(props: NonNullable<SceneProps['fog']>) {
+    addFog(props: NonNullable<SceneProps['fog']>): void {
         const { color = '#ffffff', near = 1, far = 100 } = props;
         this.fog = new Fog(color, near, far);
     }
 
-    addLights(lightsSettings: LightProps[] = []) {
+    addLights(lightsSettings: LightProps[] = []): void {
         for (const props of lightsSettings) {
             const light = this.createLightInstance(props);
 

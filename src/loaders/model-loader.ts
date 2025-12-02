@@ -54,11 +54,11 @@ export class ModelLoader {
         return mesh.clone();
     }
 
-    getAnimation(key: string, index = 0) {
+    getAnimation(key: string, index = 0): AnimationClip {
         return this.storage[key].animations[index];
     }
 
-    getAnimations(key: string, commonNamePart?: string) {
+    getAnimations(key: string, commonNamePart?: string): AnimationClip[] {
         const list = this.storage[key].animations;
         // biome-ignore format : keep it as it is
         return commonNamePart 

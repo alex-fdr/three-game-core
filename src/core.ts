@@ -51,7 +51,7 @@ export class GameCore {
     onUpdate: Signal<[number, number]> = new Signal();
     onResize: Signal<[number, number]> = new Signal();
 
-    init(width: number, height: number, gameSettings: Partial<GameSettings> = {}) {
+    init(width: number, height: number, gameSettings: Partial<GameSettings> = {}): void {
         const settings = utils.deepMerge(defaultSettings, gameSettings);
         const { scene, camera, renderer, physics } = settings;
 
@@ -78,14 +78,14 @@ export class GameCore {
         });
     }
 
-    resize(width: number, height: number) {
+    resize(width: number, height: number): void {
         this.camera.resize(width, height);
         this.renderer.resize(width, height);
 
         this.onResize.dispatch(width, height);
     }
 
-    render() {
+    render(): void {
         if (this.renderer.needResetState) {
             this.renderer.resetState();
         }
@@ -93,7 +93,7 @@ export class GameCore {
         this.renderer.render(this.scene, this.camera);
     }
 
-    update(time: number) {
+    update(time: number): void {
         this.physics?.update(time);
 
         this.onUpdate.dispatch(time, this.clock.getDelta());

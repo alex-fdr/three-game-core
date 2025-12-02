@@ -31,7 +31,7 @@ export class InputSystem {
         this.domElement = domElement;
     }
 
-    init() {
+    init(): void {
         const supportTouchEvent = 'ontouchstart' in document.documentElement;
         const isTouch = supportTouchEvent || navigator?.maxTouchPoints >= 1;
         const [down, move, up] = isTouch ? this.touchEvents : this.mouseEvents;
@@ -70,7 +70,7 @@ export class InputSystem {
         });
     }
 
-    setHandler(handler: InputHandler) {
+    setHandler(handler: InputHandler): void {
         this.handler = handler;
         this.enabled = true;
     }

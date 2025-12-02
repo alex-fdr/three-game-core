@@ -9,7 +9,6 @@ export type CameraProps = {
     far: number;
     position: Vector3Like;
     wrapper?: {
-        enabled: boolean;
         lerp: number;
         position: Vector3Like;
     };
@@ -32,7 +31,7 @@ export class Camera extends PerspectiveCamera {
         }
     }
 
-    addWrapper(scene: Scene, props: NonNullable<CameraProps['wrapper']>) {
+    addWrapper(scene: Scene, props: NonNullable<CameraProps['wrapper']>): void {
         const { x = 0, y = 0, z = 0 } = props.position;
         this.wrapper = new Object3D();
         this.wrapper.position.set(x, y, z);
@@ -41,7 +40,7 @@ export class Camera extends PerspectiveCamera {
         this.lookAt(x, y, z);
     }
 
-    resize(width: number, height: number) {
+    resize(width: number, height: number): void {
         // const { fov } = gameSettings.camera;
         const { fov } = this.userData;
         this.aspect = width / height;
