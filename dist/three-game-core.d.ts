@@ -54,7 +54,6 @@ declare type CameraProps = {
     far: number;
     position: Vector3Like;
     wrapper?: {
-        enabled: boolean;
         lerp: number;
         position: Vector3Like;
     };
@@ -97,10 +96,7 @@ export declare type GameSettings = {
 
 declare function getObjectSize(target: Object3D): Vector3;
 
-declare function getScreenSize(base?: number): {
-    width: number;
-    height: number;
-};
+declare function getScreenSize(base?: number): ScreenSize;
 
 declare type HemisphereLightProps = {
     type: 'hemisphere';
@@ -209,6 +205,11 @@ declare type SceneProps = {
     lights?: LightProps[];
 };
 
+declare type ScreenSize = {
+    width: number;
+    height: number;
+};
+
 declare class Signal<T extends any[]> {
     listeners: ListenerFunc<T>[];
     add(listener: ListenerFunc<T>, context?: unknown): void;
@@ -244,8 +245,6 @@ declare type TextureProps = {
     repeatY: number;
 };
 
-declare function throttleTrailing(callback: Function, limit: number): (...args: any[]) => void;
-
 declare interface TransformProps {
     position?: Partial<Vector3Like>;
     rotation?: Partial<Vector3Like>;
@@ -257,10 +256,9 @@ export declare namespace utils {
     export {
         applyTransform,
         TransformProps,
+        deepMerge,
         getObjectSize,
-        getScreenSize,
-        throttleTrailing,
-        deepMerge
+        getScreenSize
     }
 }
 
