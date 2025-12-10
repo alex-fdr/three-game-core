@@ -1,7 +1,7 @@
 {
     "name": "@alexfdr/three-game-core",
     "version": "1.0.21",
-    "description": "a three.js wrapper",
+    "description": "a three.js starter template",
     "author": "alexfdr",
     "license": "ISC",
     "keywords": [
