@@ -14,7 +14,6 @@ import { Vector3 } from 'three';
 import { Vector3Like } from 'three';
 import { WebGLRenderer } from 'three';
 import { WebGLRendererParameters } from 'three';
-import { World } from 'cannon-es';
 
 declare type AmbientLightProps = {
     type: 'ambient';
@@ -76,7 +75,6 @@ declare class GameCore {
     scene: Scene;
     camera: Camera;
     renderer: Renderer;
-    physics?: Physics;
     input: InputSystem;
     clock: Clock;
     onUpdate: Signal<[number, number]>;
@@ -91,7 +89,6 @@ export declare type GameSettings = {
     scene: SceneProps;
     renderer: RendererProps;
     camera: CameraProps;
-    physics: PhysicsProps;
 };
 
 declare function getObjectSize(target: Object3D): Vector3;
@@ -157,19 +154,6 @@ declare class ModelLoader {
     getAnimation(key: string, index?: number): AnimationClip;
     getAnimations(key: string, commonNamePart?: string): AnimationClip[];
 }
-
-declare class Physics {
-    timeStep: number;
-    lastCallTime: number;
-    maxSubSteps: number;
-    world: World;
-    constructor(config: PhysicsProps);
-    update(time: number): void;
-}
-
-declare type PhysicsProps = {
-    gravity?: Vector3Like;
-};
 
 declare class Renderer extends WebGLRenderer {
     needResetState: boolean;
