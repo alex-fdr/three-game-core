@@ -1,5 +1,4 @@
 import type { CameraProps } from './camera';
-import type { PhysicsProps } from './physics';
 import type { RendererProps } from './renderer';
 import type { SceneProps } from './scene';
 
@@ -7,7 +6,6 @@ export type GameSettings = {
     scene: SceneProps;
     renderer: RendererProps;
     camera: CameraProps;
-    physics: PhysicsProps;
 };
 
 export const defaultSettings: GameSettings = {
@@ -34,5 +32,4 @@ export const defaultSettings: GameSettings = {
         parentId: '',
         needResetState: false,
     },
-    physics: {},
 };

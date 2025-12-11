@@ -2,7 +2,6 @@ import { Clock } from 'three';
 import { Camera } from './camera';
 import { Signal } from './helpers/signal';
 import { InputSystem } from './input';
-import { Physics } from './physics';
 import { Renderer } from './renderer';
 import { Scene } from './scene';
 import { defaultSettings, type GameSettings } from './settings';
@@ -12,7 +11,6 @@ export class GameCore {
     scene!: Scene;
     camera!: Camera;
     renderer!: Renderer;
-    physics?: Physics;
     input!: InputSystem;
     clock = new Clock();
     onUpdate: Signal<[number, number]> = new Signal();
@@ -25,10 +23,6 @@ export class GameCore {
         this.camera = new Camera(settings.camera, this.scene);
         this.renderer = new Renderer({ ...settings.renderer, width, height });
         this.input = new InputSystem(this.renderer.domElement);
-
-        if (settings.physics) {
-            this.physics = new Physics(settings.physics);
-        }
 
         this.renderer.setAnimationLoop(this.update.bind(this));
         this.resize(width, height);
@@ -60,8 +54,6 @@ export class GameCore {
     }
 
     update(time: number): void {
-        this.physics?.update(time);
-
         this.onUpdate.dispatch(time, this.clock.getDelta());
     }
 }
