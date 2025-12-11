@@ -1,4 +1,4 @@
-A starter template to speed up the initial development phase of a three.js based project. It contains some useful components such as: scene, camera, renderer, assets loaders and an optional module for cannon-es physics. 
+A starter template to speed up the initial development phase of a three.js based project. It contains some useful components such as: scene, camera, renderer and assets loaders. 
 
 [![npm version](https://img.shields.io/npm/v/@alexfdr/three-game-core)](https://www.npmjs.com/package/@alexfdr/three-game-core)
 
