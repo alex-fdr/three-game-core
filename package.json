@@ -5,8 +5,7 @@
     "author": "alexfdr",
     "license": "ISC",
     "keywords": [
-        "three",
-        "cannon-es"
+        "three"
     ],
     "type": "module",
     "files": [
@@ -27,7 +26,6 @@
         "vite-plugin-dts": "^4.5.4"
     },
     "peerDependencies": {
-        "cannon-es": "^0.20.0",
         "three": "^0.181.0"
     },
     "repository": {
