@@ -277,6 +277,7 @@ class I {
 }
 const H = new I(), Y = new P();
 export {
+  d as Signal,
   H as assets,
   Y as core,
   G as utils

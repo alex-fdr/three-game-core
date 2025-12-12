@@ -194,7 +194,7 @@ declare type ScreenSize = {
     height: number;
 };
 
-declare class Signal<T extends any[]> {
+export declare class Signal<T extends any[]> {
     listeners: ListenerFunc<T>[];
     add(listener: ListenerFunc<T>, context?: unknown): void;
     addOnce(listener: ListenerFunc<T>, context?: unknown): void;
