@@ -1,21 +1,21 @@
-A starter template to speed up the initial development phase of a three.js based project. It contains some useful components such as: scene, camera, renderer and assets loaders. 
+A starter template to speed up the initial development phase of a three.js based project. It contains some useful components such as: a scene, a camera, a renderer and asset loaders for textures and glb models. 
 
 [![npm version](https://img.shields.io/npm/v/@alexfdr/three-game-core)](https://www.npmjs.com/package/@alexfdr/three-game-core)
 
-# How to install
+## How to install
 ```bash
-npm install @alexfdr/three-game-core --save
+npm install --save @alexfdr/three-game-core 
 ```
 
-# How to use
+## How to use
 
-## Initialization
 ```typescript
 import { core } from '@alexfdr/three-game-core';
 
 core.init(window.innerWidth, window.innerHeight);
 ```
-It is possible to define some extra settings for a camera, a renderer and a scene, etc.
+
+Init method receives an optional config object.
 ```typescript
 import { core, type GameSettings } from '@alexfdr/three-game-core';
 
