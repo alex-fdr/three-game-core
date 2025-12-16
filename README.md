@@ -1,4 +1,4 @@
-A starter template to speed up the initial development phase of a three.js based project. It contains some useful components such as: a scene, a camera, a renderer and asset loaders for textures and glb models. 
+A starter template to speed up the initial development phase in a three.js based project. It contains some useful components such as: a scene, a camera, a renderer and asset loaders for textures and glb models. 
 
 [![npm version](https://img.shields.io/npm/v/@alexfdr/three-game-core)](https://www.npmjs.com/package/@alexfdr/three-game-core)
 
