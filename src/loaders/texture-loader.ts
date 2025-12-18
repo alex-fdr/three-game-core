@@ -38,6 +38,11 @@ export class TextureLoader {
         const { clone = false, flipY = false, repeatX = 0, repeatY = repeatX } = props;
 
         let texture = this.storage[key];
+
+        if (!texture) {
+            throw new Error(`no texture named ${key} found`);
+        }
+
         texture = clone ? texture.clone() : texture;
         texture.flipY = flipY;
 
