@@ -1,7 +1,6 @@
 import { Clock } from 'three';
 import { Camera } from './camera';
 import { Signal } from './helpers/signal';
-import { InputSystem } from './input';
 import { Renderer } from './renderer';
 import { Scene } from './scene';
 import { defaultSettings, type GameSettings } from './settings';
@@ -11,7 +10,6 @@ export class GameCore {
     scene!: Scene;
     camera!: Camera;
     renderer!: Renderer;
-    input!: InputSystem;
     clock = new Clock();
     onUpdate: Signal<[number, number]> = new Signal();
     onResize: Signal<[number, number]> = new Signal();
@@ -22,11 +20,9 @@ export class GameCore {
         this.scene = new Scene(settings.scene);
         this.camera = new Camera(settings.camera, this.scene);
         this.renderer = new Renderer({ ...settings.renderer, width, height });
-        this.input = new InputSystem(this.renderer.domElement);
 
         this.renderer.setAnimationLoop(this.update.bind(this));
         this.resize(width, height);
-        this.input.init();
 
         if (!settings.renderer?.needResetState) {
             this.onUpdate.add(this.render, this);
