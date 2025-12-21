@@ -75,7 +75,6 @@ declare class GameCore {
     scene: Scene;
     camera: Camera;
     renderer: Renderer;
-    input: InputSystem;
     clock: Clock;
     onUpdate: Signal<[number, number]>;
     onResize: Signal<[number, number]>;
@@ -101,38 +100,6 @@ declare type HemisphereLightProps = {
     groundColor: number | string;
     intensity: number;
 };
-
-export declare interface InputHandler {
-    down(e: MouseEvent | Touch): void;
-    move(e: MouseEvent | Touch): void;
-    up(e: MouseEvent | Touch): void;
-    pressed?: boolean;
-    status: InputStatus;
-}
-
-export declare interface InputStatus {
-    currX: number;
-    currY: number;
-    prevX: number;
-    prevY: number;
-    deltaX: number;
-    deltaY: number;
-}
-
-declare class InputSystem {
-    domElement: HTMLCanvasElement;
-    enabled: boolean;
-    handler: InputHandler | null;
-    mouseEvents: readonly ["mousedown", "mousemove", "mouseup"];
-    touchEvents: readonly ["touchstart", "touchmove", "touchend"];
-    onDown: Signal<[InputStatus]>;
-    onUp: Signal<[InputStatus]>;
-    onMove: Signal<[InputStatus]>;
-    constructor(domElement: HTMLCanvasElement);
-    init(): void;
-    setHandler(handler: InputHandler): void;
-    getEvent(e: TouchEvent | MouseEvent): Touch | MouseEvent;
-}
 
 declare type LightProps = DirectionalLightProps | HemisphereLightProps | AmbientLightProps;
 
